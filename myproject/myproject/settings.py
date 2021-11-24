@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -115,6 +115,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'cms.context_processors.cms_settings'
             ],
+           
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader'
@@ -136,7 +137,8 @@ MIDDLEWARE = [
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware'
+    'cms.middleware.language.LanguageCookieMiddleware',
+    'livereload.middleware.LiveReloadScript'
 ]
 
 INSTALLED_APPS = [
@@ -194,6 +196,10 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_autosuggest',
     'aldryn_search',
+    'livereload',
+    'django_static_jquery',
+    'bootstrap4'
+    
 ]
 
 LANGUAGES = (
@@ -247,7 +253,7 @@ DATABASES = {
         'CONN_MAX_AGE': 0,
         'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
         'HOST':  os.environ.get("SQL_HOST",'localhost'),
-        'NAME': os.environ.get("SQL_DATABASE",  BASE_DIR / 'project.db',),
+        'NAME': os.environ.get("SQL_DATABASE",  os.path.join(BASE_DIR , 'project.db')),
         'PASSWORD': os.environ.get("SQL_PASSWORD", ''),
         'PORT':  os.environ.get("SQL_PORT", ''),
         'USER': os.environ.get("SQL_USER",'')
@@ -296,3 +302,53 @@ ALDRYN_SEARCH_LANGUAGE_FROM_ALIAS = lambda alias: alias.split('-')[-1]
 
 #to use aldryn_search apphook
 ALDRYN_SEARCH_REGISTER_APPHOOK=True
+
+# BOOTSTRAP4
+DJANGOCMS_BOOTSTRAP4_TAG_CHOICES = ['div', 'section', 'article', 'header', 'footer', 'aside']
+
+DJANGOCMS_BOOTSTRAP4_CAROUSEL_TEMPLATES = (
+    ('default', _('Default')),
+)
+
+DJANGOCMS_BOOTSTRAP4_GRID_SIZE = 12
+DJANGOCMS_BOOTSTRAP4_GRID_CONTAINERS = (
+    ('container', _('Container')),
+    ('container-fluid', _('Fluid container')),
+)
+DJANGOCMS_BOOTSTRAP4_GRID_COLUMN_CHOICES = (
+    ('col', _('Column')),
+    ('w-100', _('Break')),
+    ('', _('Empty'))
+)
+
+DJANGOCMS_BOOTSTRAP4_USE_ICONS = True
+
+DJANGOCMS_BOOTSTRAP4_TAB_TEMPLATES = (
+    ('default', _('Default')),
+)
+
+DJANGOCMS_BOOTSTRAP4_SPACER_SIZES = (
+    ('0', '* 0'),
+    ('1', '* .25'),
+    ('2', '* .5'),
+    ('3', '* 1'),
+    ('4', '* 1.5'),
+    ('5', '* 3'),
+)
+
+DJANGOCMS_BOOTSTRAP4_CAROUSEL_ASPECT_RATIOS = (
+    (16, 9),
+)
+
+DJANGOCMS_BOOTSTRAP4_COLOR_STYLE_CHOICES = (
+    ('primary', _('Primary')),
+    ('secondary', _('Secondary')),
+    ('success', _('Success')),
+    ('danger', _('Danger')),
+    ('warning', _('Warning')),
+    ('info', _('Info')),
+    ('light', _('Light')),
+    ('dark', _('Dark')),
+    ('custom', _('Custom')),
+)
+

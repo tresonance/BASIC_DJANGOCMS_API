@@ -5,38 +5,54 @@
 {% block canonical_url %}<link rel="canonical" href="{{ view.get_view_url }}"/>{% endblock canonical_url %}
 
 {% block content_blog %}
-<section class="blog-list">
-    {% block blog_title %}
-    <header>
-        <h2>
-        {% if author %}{% trans "Articles by" %} {{ author.get_full_name }}
-        {% elif archive_date %}{% trans "Archive" %} &ndash; {% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}
-        {% elif tagged_entries %}{% trans "Tag" %} &ndash; {{ tagged_entries|capfirst }}
-        {% elif category %}{% trans "Category" %} &ndash; {{ category }}{% endif %}
-        </h2>
-    </header>
-    {% endblock %}
-    {% for post in post_list %}
-        {% include "myblog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+
+    {% for i  in NUM_ROW %}
+    <div class="row mb-4"></div>
+
+        {% for j in NUM_COL %}
+        {% get_index i j as index %}
+        {% include "myblog/includes/section_item.html" with post=post_list.index image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+        {% endfor %}
     {% empty %}
-    <p class="blog-empty">{% trans "No article found." %}</p>
+        <p class="blog-empty">{% trans "No article found." %}</p>
+    </div>
     {% endfor %}
-    {% if author or archive_date or tagged_entries %}
-    <p class="blog-back"><a href="{% url 'myblog:posts-latest' %}">{% trans "Back" %}</a></p>
-    {% endif %}
-    {% if is_paginated %}
-    <nav class="{% firstof css_grid instance.css_grid %} pagination">
-        {% if page_obj.has_previous %}
-            <a href="?{{ view.page_kwarg }}={{ page_obj.previous_page_number }}">&laquo; {% trans "previous" %}</a>
-        {% endif %}
-        <span class="current">
-            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ paginator.num_pages }}
-        </span>
-        {% if page_obj.has_next %}
-            <a href="?{{ view.page_kwarg }}={{ page_obj.next_page_number }}">{% trans "next" %} &raquo;</a>
-        {% endif %}
-    </nav>
-    {% endif %}
-</section>
+
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-left mt-4">
+        
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        
+
+        
+            
+                
+                    <li class="page-item active"><a class="page-link"" href="?page=1">1</a></li>
+                
+            
+                
+                    <li class="page-item"><a class="page-link"" href="?page=2">2</a></li>
+                
+            
+                
+                    <li class="page-item"><a class="page-link"" href="?page=3">3</a></li>
+                
+            
+        
+
+        
+            <li class="page-item">
+                <a class="page-link"" href="?page=2">
+                    Next
+                </a>
+            </li>
+        
+    </ul>
+</nav>
+
 {% endblock %}
 {% endspaceless %}

@@ -10,7 +10,7 @@ services:
     command: sh -c "python myproject/manage.py collectstatic --noinput &&
              python myproject/manage.py makemigrations &&
              python myproject/manage.py migrate &&
-             source dev/create_superuser_prod.sh && 
+             source dev/create_superuser_dev.sh && 
              python myproject/manage.py runserver 0.0.0.0:8000"
     ports:
           - "8000:8000"

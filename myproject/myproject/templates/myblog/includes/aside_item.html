@@ -1,6 +1,6 @@
 {% load i18n easy_thumbnails_tags cms_tags %}
 
-<ul class="post-detail">
+<!-- <ul class="post-detail">
     {% if post.author %}
     <li>
         {% trans "by" %} <a href="{% url 'myblog:posts-author' post.author.get_username %}">{% if post.author.get_full_name %}{{ post.author.get_full_name }}{% else %}{{ post.author }}{% endif %}</a>
@@ -30,4 +30,34 @@
             <li class="tag_{{ forloop.counter }}"><a href="{% url 'myblog:posts-tagged' tag=tag.slug %}" class="blog-tag blog-tag-{{ tag.count }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}</li>
         {% endfor %}
     {% endif %}
-</ul>
+</ul> -->
+
+ <!--right-->
+ <!-- aside class="col-lg-4 agileits-w3ls-right-blog-con text-left"> -->
+
+        <!-- aside_post : recents_articles -->
+            <article class="article">
+                <div class="blog-grids row mb-3">
+                    <div class="col-md-5 blog-grid-left">
+                        <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+                            <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img4.jpeg" >
+                        </a>
+                    </div>
+                    <div class="col-md-7 blog-grid-right">
+                        <h5>
+                            <a href="/en/blog/Create-Your-Own-CMS-Blog/">Create Your Own CMS-Blog</a>
+
+                        </h5>
+                        <div class="sub-meta">
+                            <span>
+                                <i class="far fa-clock"></i>
+                                May 18, 2020, 5:23 p.m.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        <!-- aside_post : recents_articles -->
+
+  <!-- </aside> -->
+  <!--//right-->

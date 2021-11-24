@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n easy_thumbnails_tags %}
+{% load myblog_tags %}
 
 {% block meta %}
     {% comment %}
@@ -16,7 +18,48 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="app app-blog">
-    {% block content_blog %}{% endblock %}
+<!--/main-->
+<section class="main-content-w3layouts-agileits">
+<div class="container">
+    <h3 class="tittle">Blog</h3>
+    <div class="row inner-sec">
+         <!--left-->
+        <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+            {% block content_blog %}{% endblock %}    
+        </div>
+         <!--//left-->
+
+        <!-- right -->
+        <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
+            <div class="right-blog-info text-left">
+                <div class="tech-btm">
+                    <img src="{{ MEDIA_URL }}/cms_img3.jpeg" alt="" width="350" source="https://www.pexels.com/search/computer/" value="subcribe">
+                </div><!-- end class="tech-btm" -->
+                {% include "myblog/includes/aside_form.html"  %}
+                <div class="tech-btm">
+                    <h4>Categories</h4>
+                    <ul class="list-group single">
+    
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="/en/blog/category/basic-tutorial/"  style="color:gray">Basic Tutorial</a>
+                            <span class="badge badge-primary badge-pill">2</span>
+                        </li>
+                    </ul>
+                </div><!-- end class="tech-btm" -->
+            </div> 
+            <div class="tech-btm">
+                <h4>Recent articles</h4>   
+                {% for post in post_list %}
+                    {% include "myblog/includes/aside_item.html"  %}
+                {% empty %}
+                    <p class="blog-empty">{% trans "No article found." %}</p>
+                {% endfor %}
+            </div>
+        </aside>
+        <!-- //right -->
+    </div><!-- end class="row inner-sec" -->
 </div>
+</section>
+ <!--//main-->
+
 {% endblock content %}

@@ -17,7 +17,7 @@ from utils.GLOBALS import get_setting
 
 User = get_user_model()
 
-
+# ------------------------------- UTILS ------------------------------------ #
 class BaseBlogView(AppConfigMixin, ViewUrlMixin):
     model = Post
 
@@ -54,22 +54,30 @@ class BaseBlogView(AppConfigMixin, ViewUrlMixin):
 class BaseBlogListView(BaseBlogView):
     context_object_name = "post_list"
     base_template_name = "post_list.html"
+   
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["TRUNCWORDS_COUNT"] = get_setting("POSTS_LIST_TRUNCWORDS_COUNT")
+        context['NUM_ARTICLE_PER_ROW'] = get_setting("NUM_ARTICLE_PER_ROW")
+       
+        context['NUM_ROW'] = Post.objects.count() // context['NUM_ARTICLE_PER_ROW']
+
+        context["NUM_COL"] = range(context['NUM_ARTICLE_PER_ROW'])
+        context['NUM_ROW'] = range(context['NUM_ROW'])
         return context
 
     def get_paginate_by(self, queryset):
         return (self.config and self.config.paginate_by) or get_setting("PAGINATION")
 
-
+# -------------------------------- VIEWS -------------------------------------- #
 class PostDetailView(TranslatableSlugMixin, BaseBlogView, DetailView):
     context_object_name = "post"
     base_template_name = "post_detail.html"
     slug_field = "slug"
     view_url_name = "myblog:post-detail"
     instant_article = False
+    print("--------------- PostDetailView ---------------")
 
     def liveblog_enabled(self):
         return self.object.enable_liveblog and apps.is_installed("myblog.liveblog")
@@ -104,13 +112,15 @@ class PostDetailView(TranslatableSlugMixin, BaseBlogView, DetailView):
 
 class PostListView(BaseBlogListView, ListView):
     view_url_name = "myblog:posts-latest"
-
+    print("--------------- PostListView ---------------")
+      
 
 class PostArchiveView(BaseBlogListView, ListView):
     date_field = "date_published"
     allow_empty = True
     allow_future = True
     view_url_name = "myblog:posts-archive"
+    print("--------------- PostArchiveView ---------------")
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -131,6 +141,7 @@ class PostArchiveView(BaseBlogListView, ListView):
 
 class TaggedListView(BaseBlogListView, ListView):
     view_url_name = "myblog:posts-tagged"
+    print("--------------- TaggedListView ---------------")
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -144,6 +155,7 @@ class TaggedListView(BaseBlogListView, ListView):
 
 class AuthorEntriesView(BaseBlogListView, ListView):
     view_url_name = "myblog:posts-author"
+    print("--------------- AuthorEntriesView ---------------")
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -160,6 +172,7 @@ class AuthorEntriesView(BaseBlogListView, ListView):
 class CategoryEntriesView(BaseBlogListView, ListView):
     _category = None
     view_url_name = "myblog:posts-category"
+    print("--------------- CategoryEntriesView ---------------")
 
     @property
     def category(self):

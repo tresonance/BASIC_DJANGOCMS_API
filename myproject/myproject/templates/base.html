@@ -1,14 +1,26 @@
-{% load cms_tags menu_tags sekizai_tags %}
+{% load static i18n cms_tags menu_tags sekizai_tags apphooks_config_tags %}
+{% load bootstrap4 %}
+{% load static %}
+
+
 <!doctype html>
 <html>
     <head>
         <title>{% block title %}This is my new project home page{% endblock title %}</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="utf-8">
+        
+        <!--Workaround for fixing Django CMS issues-->
+       <!-- Add icon library -->
+       <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+       <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+       <link href="{% static 'djangocms_bootstrap4/css/base.css' %}" rel="stylesheet" type="text/css">
+    
         <style type="text/css">
-            .nav {
+           .nav {
                 padding-left: 0;
             }
-            .nav li {
+            li {
                 display: inline;
                 list-style-type: none;
                 padding-right: 20px;
@@ -25,18 +37,229 @@
                 float: left;
                 width: 20%;
             }
+           
         </style>
+
+        
         {% render_block "css" %}
     </head>
     <body>
         {% cms_toolbar %}
-        <div class="container">
-            <ul class="nav">
-                {% show_menu 0 100 100 100 "menu_bar/navigation.html"  %}
-            </ul>
+        <!--Header-->
+        <br/>
+    <header>
+      <!-- <ul class="nav">
+        {% show_menu 0 100 100 100 "menu_bar/navigation.html"  %}
+      </ul> -->
+        <div class="container-fluid">
+          <div class="row">
 
-            {% block content %}{% endblock content %}
+            <div class='col-md-3'>
+                <a  href="/">
+                  <p><a href="{% url 'myblog:posts-latest' %}"><img alt="DjangoCMS-TW logo" src="{{ MEDIA_URL }}/logo.png" style="height: 60px;"></a></p>
+                </a>
+            </div>
+
+              <div class="col-md-6 top-forms text-center mt-lg-3 mt-md-1 mt-0">
+                <p>Maths Physic Coding</p>
+                <p><a href="https://www.django-cms-themes.com/"><img src="{{ MEDIA_URL }}/logo.png" style="height: 30px;"></a></p>
+              </div> 
+
+            <div class="col-md-3 log-icons text-right">
+              <ul class="social_list1 mt-3">
+                <li>
+                  
+                  <a href="https://www.facebook.com/sharer.php?u=URLTOSHARE&amp;t=TITLE" class="fb" title="Share this page!">
+                    <i class="icon-facebook"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/share?url=URLTOSHARE" class="tw" title="Tweet this page!">
+                    <i class="icon-twitter"></i>
+                  </a>
+                </li>
+                </ul>
+            </div>
+
+          </div><!-- end row -->
+        </div><!-- end container-fluid-->
+
+        <div class="header_top" id="home">
+          <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+              <div class="navbar-header">
+                <!-- <a href="#" class="navbar-brand">Logo</a> -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-responsive-65">
+                  <span class="sr-only"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse" id="navbar-responsive-65">
+                <div class="navbar-left">
+                  <nav>
+                    <ul class="nav navbar-nav">
+                      <li>
+                        <a href="/">Home</a>
+                      </li>
+                      <li>
+                        <a href="{% url 'myblog:posts-latest' %}">Blog</a>
+                      </li>
+                      <li>
+                        <a href="{% url 'myblog:posts-latest' %}">Contact</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="navbar-right">
+                  <form class="search-form searchbar" role="search" id="hiddenSearchBox" action="" method="get">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      <input type="hidden" name="id" value="63">
+                      <input type="search" name="keywords" class="form-control" placeholder="Search..">
+                      <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default" data-toggle="searchbar" data-target="#hiddenSearchBox">
+                          <span class="glyphicon glyphicon-search"></span> <span class="sr-only">Submit</span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+      <!--//header-->
+      <!--/banner-->
+      <div class="banner-inner">
+      </div>
+      <!--//banner-->
+
+            {% block content %}
+            
+            {% endblock content %}
         </div>
         {% render_block "js" %}
+        <script type="text/javascript" src="{% static 'static_jquery/js/jquery.js' %}" ></script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+            if (typeof jQuery === "undefined") { throw new Error("jQuery required"); }
+
++function ($) {
+  'use strict';
+
+  // SEARCHBAR CLASS DEFINITION
+  // =========================
+
+  var backdrop = '.searchbar-backdrop';
+  var toggle   = '[data-toggle="searchbar"]';
+  var Searchbar = function (element) {
+    $(element).on('click.mr.searchbar', this.toggle);
+  };
+
+  Searchbar.VERSION = '1.0.0';
+
+  Searchbar.prototype.toggle = function (e) {
+    var $this = $(this);
+
+    if ($this.is('.disabled, :disabled')) return;
+
+    var $parent  = getParent($this);
+    var isActive = $parent.hasClass('open') || (typeof isXS == 'function' && isXS());
+
+    if (!isActive) {
+        
+      clearMenus();
+      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+        // if mobile we use a backdrop because click events don't delegate
+        $('<div class="searchbar-backdrop"/>').insertAfter($(this)).on('click', clearMenus);
+      }
+      
+      var relatedTarget = { relatedTarget: this };
+      $parent.trigger(e = $.Event('show.mr.searchbar', relatedTarget));
+
+      if (e.isDefaultPrevented()) return;
+      e.preventDefault();
+
+      $parent.find('input').trigger('focus');
+      
+      $parent
+        .toggleClass('open')
+        .trigger('shown.mr.searchbar', relatedTarget);
+
+        return false;
+    }
+  };
+
+  function clearMenus(e) {
+    if (e && e.which === 3) return
+    $(backdrop).remove();
+    $(toggle).each(function () {
+      var $parent = getParent($(this));
+      var relatedTarget = { relatedTarget: this };
+      if (!$parent.hasClass('open')) return;
+      $parent.trigger(e = $.Event('hide.mr.searchbar', relatedTarget));
+      if (e.isDefaultPrevented()) return;
+      $parent.removeClass('open').trigger('hidden.mr.searchbar', relatedTarget);
+    });
+  }
+
+  function getParent($this) {
+    var selector = $this.attr('data-target');
+    
+    if (!selector) {
+      return $this.parents('form');
+    }
+
+    var $parent = selector && $(selector);
+
+    return $parent && $parent.length ? $parent : $this.parent();
+  }
+
+
+  // SEARCHBAR PLUGIN DEFINITION
+  // ==========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this);
+      var data  = $this.data('mr.searchbar');
+
+      if (!data) $this.data('mr.searchbar', (data = new Searchbar(this)));
+      if (typeof option == 'string') data[option].call($this);
+    });
+  }
+
+  var old = $.fn.searchbar;
+
+  $.fn.searchbar             = Plugin;
+  $.fn.searchbar.Constructor = Searchbar;
+
+
+  // SEARCHBAR NO CONFLICT
+  // ====================
+
+  $.fn.searchbar.noConflict = function () {
+    $.fn.searchbar = old;
+    return this;
+  };
+
+
+  // APPLY TO STANDARD SEARCHBAR ELEMENTS
+  // ===================================
+
+  $(document)
+    .on('click.mr.searchbar.data-api', clearMenus)
+    .on('click.mr.searchbar.data-api', '.searchbar', function (e) { e.stopPropagation(); })
+    //.on('focus.mr.searchbar.data-api', toggle, Searchbar.prototype.toggle) // this causes the focus event to trigger twice
+    .on('click.mr.searchbar.data-api', toggle, Searchbar.prototype.toggle);
+
+
+}(jQuery);
+          })
+        </script>
     </body>
 </html>

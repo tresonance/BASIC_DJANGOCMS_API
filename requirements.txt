@@ -31,3 +31,5 @@ django-haystack
 aldryn_search
 gunicorn==20.1.0
 psycopg2-binary==2.9.1
+django-static-jquery==2.1.4
+django-livereload-server

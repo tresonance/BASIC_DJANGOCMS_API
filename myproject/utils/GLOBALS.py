@@ -69,6 +69,8 @@ SITEMAP_CHANGEFREQ_LIST = (  # noqa
 List of changefreqs defined in sitemaps.
 """
 
+BLOG_NUM_ARTICLE_PER_ROW = 2
+
 BLOG_IMAGE_THUMBNAIL_SIZE = {"size": "120x120", "crop": True, "upscale": False}
 """
 .. _IMAGE_THUMBNAIL_SIZE:

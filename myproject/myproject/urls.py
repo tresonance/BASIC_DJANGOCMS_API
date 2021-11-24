@@ -17,7 +17,7 @@ urlpatterns += i18n_patterns(
         re_path(r'^admin/', admin.site.urls),
         re_path(r'^blog/', include('myblog.urls')),
         re_path(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
-        re_path(r'^', include('cms.urls'))
+        re_path(r'^', include('cms.urls'), name="home")
         )
 
 # This is only needed when using runserver.

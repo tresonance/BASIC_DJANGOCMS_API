@@ -1,0 +1,36 @@
+{% load myblog_tags i18n easy_thumbnails_tags cms_tags %}
+
+<div class="col-md-6 mb-4 card">
+    <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+        <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img2.jpg" >
+    </a>
+    <div class="card-body">
+        <ul class="blog-icons my-4">
+            <li>
+                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+                    <i class="far fa-calendar-alt"></i> May 18, 2020</a>
+            </li>
+            <li class="mx-2">
+                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+                    <i class="far fa-comment"></i> 0</a>
+            </li>
+            <li>
+                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+                    <i class="fas fa-eye"></i> 271</a>
+            </li>
+
+        </ul>
+        <h5 class="card-title ">
+            <a href="/en/blog/Create-Your-Own-CMS-Blog/">Create Your Own CMS-Blog</a>
+        </h5>
+        <p class="card-text mb-3">
+            {% if not TRUNCWORDS_COUNT %}
+                {% render_model post "abstract" "" "" "safe" %}
+            {% else %}
+                {% render_model post "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
+            {% endif %}
+        </p>
+        <a href="/en/blog/Create-Your-Own-CMS-Blog/" class="btn btn-primary read-m">Read More</a>
+    </div>
+</div><!-- end class="col-md-6 mb-4 card" -->
+
