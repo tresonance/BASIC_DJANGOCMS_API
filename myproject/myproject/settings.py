@@ -198,7 +198,8 @@ INSTALLED_APPS = [
     'aldryn_search',
     'livereload',
     'django_static_jquery',
-    'bootstrap4'
+    'bootstrap4',
+    'mathfilters'
     
 ]
 

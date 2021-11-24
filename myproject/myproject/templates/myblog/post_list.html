@@ -1,25 +1,28 @@
 {% extends "myblog/base.html" %}
 {% load i18n easy_thumbnails_tags %}{% spaceless %}
-{% load myblog_tags %}
+{% load myblog_tags mathfilters %}
 
 {% block canonical_url %}<link rel="canonical" href="{{ view.get_view_url }}"/>{% endblock canonical_url %}
 
 {% block content_blog %}
-
+<div class="container">
     {% for i  in NUM_ROW %}
-    <div class="row mb-4"></div>
-
+    <div class="row"></div>
         {% for j in NUM_COL %}
-        {% get_index i j as index %}
-        {% include "myblog/includes/section_item.html" with post=post_list.index image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+            {% with index=i|mul:NUM_ARTICLE_PER_ROW %}
+            {% with index=index|addition:j %}
+            <div class="col-md-6">
+                {% get_current_post index as post %}
+                {% include "myblog/includes/section_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+                {% endwith %}
+            {% endwith %}
+            </div>
         {% endfor %}
     {% empty %}
         <p class="blog-empty">{% trans "No article found." %}</p>
     </div>
     {% endfor %}
-
-
-
+</div>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-left mt-4">
         

@@ -2,7 +2,8 @@
 
 <div class="col-md-6 mb-4 card">
     <a href="/en/blog/Create-Your-Own-CMS-Blog/">
-        <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img2.jpg" >
+        
+        <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img2.jpg"  width="350">
     </a>
     <div class="card-body">
         <ul class="blog-icons my-4">
@@ -21,12 +22,13 @@
 
         </ul>
         <h5 class="card-title ">
-            <a href="/en/blog/Create-Your-Own-CMS-Blog/">Create Your Own CMS-Blog</a>
+            <a href="/en/blog/Create-Your-Own-CMS-Blog/">title:{{ post.title }}</a>
         </h5>
         <p class="card-text mb-3">
             {% if not TRUNCWORDS_COUNT %}
                 {% render_model post "abstract" "" "" "safe" %}
             {% else %}
+                <span>content: {{ post.title }}</span>
                 {% render_model post "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
             {% endif %}
         </p>

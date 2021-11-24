@@ -20,8 +20,8 @@
 {% block content %}
 <!--/main-->
 <section class="main-content-w3layouts-agileits">
-<div class="container">
-    <h3 class="tittle">Blog</h3>
+<div class="container-fluid">
+  
     <div class="row inner-sec">
          <!--left-->
         <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
@@ -50,7 +50,7 @@
             <div class="tech-btm">
                 <h4>Recent articles</h4>   
                 {% for post in post_list %}
-                    {% include "myblog/includes/aside_item.html"  %}
+                    {% include "myblog/includes/aside_item.html"  with post=post image="true" TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE %}
                 {% empty %}
                     <p class="blog-empty">{% trans "No article found." %}</p>
                 {% endfor %}

@@ -103,7 +103,8 @@ BLOG_LATEST_POSTS = 5
 Default number of post in the **Latest post** plugin.
 """
 
-BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 100
+BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 50
+BLOG_TRUNCWORDS_COUNT_ASIDE=9
 """
 .. _POSTS_LIST_TRUNCWORDS_COUNT:
 Default number of words shown for abstract in the post list.

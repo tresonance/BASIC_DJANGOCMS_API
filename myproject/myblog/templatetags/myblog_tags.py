@@ -73,10 +73,8 @@ def media_images(context, post, main=True):
 
 
 @register.simple_tag(name="get_current_post", takes_context=True)
-def get_current_post(context, i, j):
-    index = i*context['NUM_COL'] + j
-    index = 0
-    post = context['post_list'][index]
+def get_current_post(context, index):
+    post = Post.objects.all()[index]
     return post
 
 
@@ -86,4 +84,6 @@ def total_posts():
 
 @register.simple_tag(name='get_index', takes_context=True) 
 def get_index(context, i, j):
-    return i * context['NUM_ARTICLE_PER_ROW'] + j
+    res =  i * context['NUM_ARTICLE_PER_ROW'] + j
+  
+    return res
