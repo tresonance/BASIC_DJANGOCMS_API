@@ -20,11 +20,11 @@
 {% block content %}
 <!--/main-->
 <section class="main-content-w3layouts-agileits">
-<div class="container-fluid">
+<div class="container-fluid main-container">
   
-    <div class="row inner-sec">
+    <div class="row inner-sec justify-content-center">
          <!--left-->
-        <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+        <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left ">
             {% block content_blog %}{% endblock %}    
         </div>
          <!--//left-->
@@ -33,7 +33,7 @@
         <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
             <div class="right-blog-info text-left">
                 <div class="tech-btm">
-                    <img src="{{ MEDIA_URL }}/cms_img3.jpeg" alt="" width="350" source="https://www.pexels.com/search/computer/" value="subcribe">
+                    <img src="{{ MEDIA_URL }}/cms_img3.jpeg" alt="" width="350" height="220" source="https://www.pexels.com/search/computer/" value="subcribe">
                 </div><!-- end class="tech-btm" -->
                 {% include "myblog/includes/aside_form.html"  %}
                 <div class="tech-btm">

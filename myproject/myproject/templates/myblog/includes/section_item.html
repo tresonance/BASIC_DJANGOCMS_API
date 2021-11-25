@@ -1,38 +1,51 @@
 {% load myblog_tags i18n easy_thumbnails_tags cms_tags %}
 
-<div class="col-md-6 mb-4 card">
-    <a href="/en/blog/Create-Your-Own-CMS-Blog/">
-        
-        <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img2.jpg"  width="350">
-    </a>
-    <div class="card-body">
-        <ul class="blog-icons my-4">
-            <li>
-                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
-                    <i class="far fa-calendar-alt"></i> May 18, 2020</a>
-            </li>
-            <li class="mx-2">
-                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
-                    <i class="far fa-comment"></i> 0</a>
-            </li>
-            <li>
-                <a href="/en/blog/Create-Your-Own-CMS-Blog/">
-                    <i class="fas fa-eye"></i> 271</a>
-            </li>
-
-        </ul>
-        <h5 class="card-title ">
-            <a href="/en/blog/Create-Your-Own-CMS-Blog/">title:{{ post.title }}</a>
-        </h5>
-        <p class="card-text mb-3">
-            {% if not TRUNCWORDS_COUNT %}
-                {% render_model post "abstract" "" "" "safe" %}
+<div class="col-md-6 jobs_index_middle_panels" id="post-{{ post.slug }}" >
+    <div class="card my-4"  style="width: 35rem;">
+      
+        <a  href="{{ post.get_absolute_url }}" >
+            {% if image and post.main_image %}
+                {% thumbnail post.main_image post.thumbnail_options.size crop=post.thumbnail_options.crop upscale=post.thumbnail_options.upscale subject_location=post.main_image.subject_location as thumb %}
+                <img class="card-img-top" alt="{{ post.main_image.default_alt_text }}" class="card-img-top img-fluid"  src="{{ thumb.url }}"  width="{{ thumb.width }}" height="{{ thumb.height }}">
             {% else %}
-                <span>content: {{ post.title }}</span>
-                {% render_model post "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
+                {% media_images post as previews %}
+                {% for preview in previews %}
+                    <img src="{{ preview }}" />
+                {% endfor %}
             {% endif %}
-        </p>
-        <a href="/en/blog/Create-Your-Own-CMS-Blog/" class="btn btn-primary read-m">Read More</a>
-    </div>
+        </a>
+        <div class="card card-body" >
+            <ul class="blog-icons my-4">
+                <li>
+                    <a  href="{{ post.get_absolute_url }}" >
+                        <i class="far fa-calendar-alt"></i> May 18, 2020</a>
+                </li>
+                <li class="mx-2">
+                    <a  href="{{ post.get_absolute_url }}" >
+                        <i class="far fa-comment"></i> 0</a>
+                </li>
+                <li>
+                    <a  href="{{ post.get_absolute_url }}" >
+                        <i class="fas fa-eye"></i> 271</a>
+                </li>
+
+            </ul>
+            <h3 class="card-title ">
+                <a  href="{{ post.get_absolute_url }}" >{{ post.title }}</a>
+            </h3>
+            <h5 class="card-subtitle ">
+                <a  href="{{ post.get_absolute_url }}" >{{ post.subtitle }}</a>
+            </h5>
+            <p class="card-text mb-0 mx-0">
+                {% if not TRUNCWORDS_COUNT %}
+                    {% render_model post "abstract" "" "" "safe" %}
+                {% else %}
+                    {% render_model post "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
+                {% endif %}
+            </p>
+            <a href="{{ post.get_absolute_url }}" class="btn btn-primary read-m">Read More</a>
+        </div>
+  
+  </div><!-- card -->
 </div><!-- end class="col-md-6 mb-4 card" -->
 

@@ -7,7 +7,7 @@
             <h3>{% trans "Articles by" %} {{ author.get_full_name }}</h3>
             <div class="blog-latest-entries">
                 {% for post in author.posts %}
-                    {% include "myblog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+                    {% include "myblog/includes/section_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
                 {% empty %}
                     <p class="blog-empty">{% trans "No article found." %}</p>
                 {% endfor %}

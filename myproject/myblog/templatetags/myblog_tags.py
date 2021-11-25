@@ -1,6 +1,7 @@
 from cms.utils.plugins import get_plugins
 from django import template
 from myblog.models import Post 
+from utils.GLOBALS import get_setting
 
 register = template.Library()
 

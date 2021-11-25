@@ -5,6 +5,9 @@
 {% block title %}{{ post.get_title }}{% endblock %}
 
 {% block content_blog %}{% spaceless %}
+<div class="container">
+<div class="row inner-sec">
+<div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
 <article id="post-{{ post.slug }}" class="post-item post-detail">
     <header>
         <h2>{% render_model post "title" %}</h2>
@@ -20,7 +23,7 @@
     {% else %}
     <div class="blog-visual">
         {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location  as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
+        <img src="{{ post.main_image.get_image_full_url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ post.main_image.get_image_width }}" height="{{ post.main_image.get_image_height }}" />
     </div>
     {% endif %}
     {% endspaceless %}
@@ -35,9 +38,12 @@
     {% if post.related.exists %}
         <section class="post-detail-list">
         {% for related in post.related.all %}
-            {% include "myblog/includes/blog_item.html" with post=related image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+            {% include "myblog/includes/aside_item.html" with post=related image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
         {% endfor %}
         </section>
     {% endif %}
 </article>
+</div>
+</div>
+</div>
 {% endblock content_blog %}

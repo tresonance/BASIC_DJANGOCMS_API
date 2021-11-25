@@ -71,7 +71,7 @@ List of changefreqs defined in sitemaps.
 
 BLOG_NUM_ARTICLE_PER_ROW = 2
 
-BLOG_IMAGE_THUMBNAIL_SIZE = {"size": "120x120", "crop": True, "upscale": False}
+BLOG_IMAGE_THUMBNAIL_SIZE = {"size": "350x220", "crop": True, "upscale": False}
 """
 .. _IMAGE_THUMBNAIL_SIZE:
 Easy-thumbnail alias configuration for the post main image when shown on the post lists;

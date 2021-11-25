@@ -1,4 +1,4 @@
-{% load myblog_tags i18n easy_thumbnails_tags cms_tags %}
+{% load myblog_tags i18n easy_thumbnails_tags cms_tags mathfilters %}
 
 <!-- <ul class="post-detail">
     {% if post.author %}
@@ -39,28 +39,23 @@
             <article class="article">
                 <div class="blog-grids row mb-3">
                     <div class="col-md-5 blog-grid-left">
-                        <a href="/en/blog/Create-Your-Own-CMS-Blog/">
+                        <a href="{{ post.get_absolute_url }}" >
                             {% if image and post.main_image %}
-                                <div class="blog-visual">
-                                    {% thumbnail post.main_image post.thumbnail_options.size crop=post.thumbnail_options.crop upscale=post.thumbnail_options.upscale subject_location=post.main_image.subject_location as thumb %}
-                                    <img src="{{ thumb.url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" /> 
+                                {% thumbnail post.main_image post.thumbnail_options.size crop=post.thumbnail_options.crop upscale=post.thumbnail_options.upscale subject_location=post.main_image.subject_location as thumb %}
                                
-                                </div>
+                                <img alt="{{ post.main_image.default_alt_text }}" class="card-img-top img-fluid"  src="{{ thumb.url }}"  width="{{ thumb.width|mul:0.5 }}" height="{{ thumb.height|mul:0.5 }}">
                             {% else %}
-                                    {% media_images post as previews %}
-                                    <div class="blog-visual">
-        
-                                        {% for preview in previews %}
-                                            <img src="{{ MEDIA_URL }}/cms_img6.jpeg" width="250" height="150" />
-                                        {% endfor %}
-                                    </div>
+                                {% media_images post as previews %}
+                                {% for preview in previews %}
+                                    <img src="{{ preview }}" />
+                                {% endfor %}
                             {% endif %}
                             <!-- <img alt=Create Your Own CMS-Blog class="card-img-top img-fluid"  src="{{ MEDIA_URL }}/cms_img4.jpeg" width="350" > -->
                         </a>
                     </div>
                     <div class="col-md-7 blog-grid-right">
                         <h5>
-                            <a href="/en/blog/Create-Your-Own-CMS-Blog/">Create Your Own CMS-Blog</a>
+                            <a href="{{ post.get_absolute_url }}" >{{ post.title }}</a>
                              <div class="blog-lead">
                                 {% if not TRUNCWORDS_COUNT_ASIDE %}
                                     {% render_model post "abstract" "" "" "safe" %}
