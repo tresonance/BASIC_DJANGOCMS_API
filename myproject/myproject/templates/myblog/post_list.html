@@ -6,56 +6,45 @@
 
 {% block content_blog %}
 <div class="container">
-    {% for i  in NUM_ROW %}
-    <div class="row"></div>
-        {% for j in NUM_COL %}
-            {% with index=i|mul:NUM_ARTICLE_PER_ROW %}
-            {% with index=index|addition:j %}
+    
+    <div class="row">
+        {% get_num_recent_posts as ASIDE_NUMBER_RECENT_POST_TO_DISPLAY %}
+        {% for post in post_list %}
+            
             <div class="col-md-6">
-                {% get_current_post index as post %}
-                {% include "myblog/includes/section_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
-                {% endwith %}
-            {% endwith %}
+                {% include "myblog/includes/section_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT ASIDE_NUMBER_RECENT_POST_TO_DISPLAY=ASIDE_NUMBER_RECENT_POST_TO_DISPLAY %}
             </div>
+            {% get_modulo forloop.counter0 as is_divided_by_two %}
+                {% if not is_divided_by_two %}
+                    <div class="w-100"></div>
+                {% endif %}
+        {% empty %}
+            <p class="blog-empty">{% trans "No article found." %}</p>
         {% endfor %}
-    {% empty %}
-        <p class="blog-empty">{% trans "No article found." %}</p>
-    </div>
-    {% endfor %}
-</div>
+    </div><!--class=row-->
+
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-left mt-4">
-        
         <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">Previous</a>
         </li>
-        
-
-        
-            
-                
-                    <li class="page-item active"><a class="page-link"" href="?page=1">1</a></li>
-                
-            
-                
-                    <li class="page-item"><a class="page-link"" href="?page=2">2</a></li>
-                
-            
-                
-                    <li class="page-item"><a class="page-link"" href="?page=3">3</a></li>
-                
-            
-        
-
-        
-            <li class="page-item">
-                <a class="page-link"" href="?page=2">
+        <li class="page-item active">
+            <a class="page-link"" href="?page=1">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"" href="?page=2">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"" href="?page=3">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"" href="?page=2">
                     Next
-                </a>
-            </li>
-        
+            </a>
+        </li>
     </ul>
 </nav>
-
+</div><!--class="container"-->
 {% endblock %}
 {% endspaceless %}

@@ -60,12 +60,14 @@ class BaseBlogListView(BaseBlogView):
         context = super().get_context_data(**kwargs)
         context['TRUNCWORDS_COUNT_ASIDE'] = get_setting('TRUNCWORDS_COUNT_ASIDE')
         context["TRUNCWORDS_COUNT"] = get_setting("POSTS_LIST_TRUNCWORDS_COUNT")
-        context['NUM_ARTICLE_PER_ROW'] = get_setting("NUM_ARTICLE_PER_ROW")
+        #context['NUM_ARTICLE_PER_ROW'] = get_setting("NUM_ARTICLE_PER_ROW")
 
-        context['NUM_ROW'] = Post.objects.count() // context['NUM_ARTICLE_PER_ROW']
+        #context['NUM_ROW'] = Post.objects.count() // context['NUM_ARTICLE_PER_ROW']
 
-        context["NUM_COL"] = range(context['NUM_ARTICLE_PER_ROW'])
-        context['NUM_ROW'] = range(context['NUM_ROW'])
+        #context["NUM_COL"] = range(context['NUM_ARTICLE_PER_ROW'])
+        #context['NUM_ROW'] = range(context['NUM_ROW'])
+        context['ASIDE_NUMBER_RECENT_POST_TO_DISPLAY'] = get_setting('ASIDE_NUMBER_RECENT_POST_TO_DISPLAY')
+
         return context
 
     def get_paginate_by(self, queryset):
@@ -107,6 +109,8 @@ class PostDetailView(TranslatableSlugMixin, BaseBlogView, DetailView):
         context["meta"] = self.get_object().as_meta()
         context["instant_article"] = self.instant_article
         context["use_placeholder"] = get_setting("USE_PLACEHOLDER")
+        context['TRUNCWORDS_COUNT_ASIDE'] = get_setting("TRUNCWORDS_COUNT_ASIDE")
+      
         setattr(self.request, get_setting("CURRENT_POST_IDENTIFIER"), self.get_object())
         return context
 
@@ -173,6 +177,7 @@ class AuthorEntriesView(BaseBlogListView, ListView):
 class CategoryEntriesView(BaseBlogListView, ListView):
     _category = None
     view_url_name = "myblog:posts-category"
+    
     print("--------------- CategoryEntriesView ---------------")
 
     @property
@@ -193,6 +198,7 @@ class CategoryEntriesView(BaseBlogListView, ListView):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
+        print("............... CategoryEntriesView .....................")
         qs = super().get_queryset()
         if "category" in self.kwargs:
             qs = qs.filter(categories=self.category.pk)
@@ -202,4 +208,5 @@ class CategoryEntriesView(BaseBlogListView, ListView):
         kwargs["category"] = self.category
         context = super().get_context_data(**kwargs)
         context["meta"] = self.category.as_meta()
+        print("+++++++++categories Post_LIST: ", context['post_list'])
         return context

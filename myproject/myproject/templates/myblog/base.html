@@ -35,9 +35,31 @@
                 <div class="tech-btm">
                     <img src="{{ MEDIA_URL }}/cms_img3.jpeg" alt="" width="350" height="220" source="https://www.pexels.com/search/computer/" value="subcribe">
                 </div><!-- end class="tech-btm" -->
+
+                <!-- form -->
                 {% include "myblog/includes/aside_form.html"  %}
+                <!--//form -->
+
                 <div class="tech-btm">
                     <h4>Categories</h4>
+
+                    <!-- List of category -->
+                    {% get_categories ""  as categories %}
+                    <ul class="post-detail tags">
+                        {% for category in categories %}
+                            {% if category.slug %}
+                                <li class="category_{{ forloop.counter }}"><a href="{% url 'myblog:posts-category' category=category.slug %}" class="blog-categories-{{ category.count }}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if post.tags.exists %}
+                            {% for tag in post.tags.all %}
+                                <li class="tag_{{ forloop.counter }}"><a href="{% url 'myblog:posts-tagged' tag=tag.slug %}" class="blog-tag blog-tag-{{ tag.count }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                   
+                    <!-- //List of category -->
+
                     <ul class="list-group single">
     
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -46,15 +68,60 @@
                         </li>
                     </ul>
                 </div><!-- end class="tech-btm" -->
-            </div> 
-            <div class="tech-btm">
-                <h4>Recent articles</h4>   
-                {% for post in post_list %}
-                    {% include "myblog/includes/aside_item.html"  with post=post image="true" TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE %}
-                {% empty %}
-                    <p class="blog-empty">{% trans "No article found." %}</p>
-                {% endfor %}
-            </div>
+
+
+                <!-- RECENT ARTICLES -->
+                <br>
+                <div class="tech-btm">
+                    <h4>Recent articles</h4> 
+                    {% get_num_recent_posts as ASIDE_NUMBER_RECENT_POST_TO_DISPLAY %}
+                    {% get_trunc_word_count_aside as TRUNCWORDS_COUNT_ASIDE %}
+                    {% get_recent_post  as recent_posts %}
+                    {% for post in recent_posts %}
+                        {% include "myblog/includes/aside_item.html"  with post=post image="true" TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE ASIDE_NUMBER_RECENT_POST_TO_DISPLAY=ASIDE_NUMBER_RECENT_POST_TO_DISPLAY TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE %}
+                    {% empty %}
+                        <p class="blog-empty">{% trans "No article found." %}</p>
+                    {% endfor %}
+                </div><!--class="tech-btm"-->
+                 <!--//RECENT ARTICLES-->
+
+                 <!-- FEATURED ARTICLES -->
+                 <br>
+                <div class="tech-btm">
+                    <h4>Featured articles</h4> 
+                        {% get_num_recent_posts as ASIDE_NUMBER_RECENT_POST_TO_DISPLAY %}
+                        {% get_trunc_word_count_aside as TRUNCWORDS_COUNT_ASIDE %}
+                        {% include "myblog/includes/aside_featured_item.html"  with post=post image="true" TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE ASIDE_NUMBER_RECENT_POST_TO_DISPLAY=ASIDE_NUMBER_RECENT_POST_TO_DISPLAY %}
+                </div><!--class="tech-btm"-->
+                <!--//FEATURED ARTICLES-->
+
+                <!-- RELATED ARTICLES -->
+                <div class="tech-btm">
+                   <p id="base-related-post-id" hidden></p>
+                   <h4>Related articles</h4> 
+        
+                   {% if post.related.exists %}
+                       {% for tag in post.related.all %}
+                           {% include "myblog/includes/aside_related_item.html"  with post=tag image="true" TRUNCWORDS_COUNT_ASIDE=TRUNCWORDS_COUNT_ASIDE  %}
+                       <!-- <li class="tag_{{ forloop.counter }}">YO<a href="{% url 'myblog:posts-tagged' tag=tag.slug %}" class="blog-tag blog-tag-{{ tag.count }}">{{ tag.title }}</a>{% if not forloop.last %}, {% endif %}</li> -->
+                       {% empty %}
+                           <p class="blog-empty">{% trans "No Related article found." %}</p>
+                       {% endfor %}
+                   {% endif %}
+                </div><!--class="tech-btm"-->
+                <!--//RELATED ARTICLES-->
+                
+            </div> <!--//class="right-blog-info text-left"-->
+
+            
+
+               
+                
+                
+
+                
+            
+
         </aside>
         <!-- //right -->
     </div><!-- end class="row inner-sec" -->

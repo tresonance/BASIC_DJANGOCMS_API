@@ -1,10 +1,13 @@
 from cms.utils.plugins import get_plugins
 from django import template
-from myblog.models import Post 
+from myblog.models import Post, BlogCategory
 from utils.GLOBALS import get_setting
 
 register = template.Library()
 
+ASIDE_NUMBER_RECENT_POST_TO_DISPLAY = get_setting("ASIDE_NUMBER_RECENT_POST_TO_DISPLAY")
+
+TRUNCWORDS_COUNT_ASIDE = get_setting('TRUNCWORDS_COUNT_ASIDE')
 
 @register.simple_tag(name="media_plugins", takes_context=True)
 def media_plugins(context, post):
@@ -72,6 +75,10 @@ def media_images(context, post, main=True):
 
 
 
+@register.simple_tag(name="get_all_posts", takes_context=True)
+def get_all_posts(context):
+    post = Post.objects.all()
+    return post
 
 @register.simple_tag(name="get_current_post", takes_context=True)
 def get_current_post(context, index):
@@ -83,8 +90,40 @@ def get_current_post(context, index):
 def total_posts():
     return Post.objects.count()
 
-@register.simple_tag(name='get_index', takes_context=True) 
-def get_index(context, i, j):
-    res =  i * context['NUM_ARTICLE_PER_ROW'] + j
-  
-    return res
+@register.simple_tag(name='get_recent_post', takes_context=True) 
+def get_recent_post(context):
+    #number_post=context['ASIDE_NUMBER_POST_TO_DISPLAY']
+    number_post=ASIDE_NUMBER_RECENT_POST_TO_DISPLAY
+    last_ten = Post.objects.all().order_by('-id')[:number_post]
+    last_ten_in_ascending_order = reversed(last_ten)
+    return last_ten_in_ascending_order
+
+
+@register.simple_tag(name='get_num_recent_posts', takes_context=True) 
+def get_num_recent_posts(context):
+    try:
+        return context['ASIDE_NUMBER_RECENT_POST_TO_DISPLAY']
+    except Exception as ex:
+         return ASIDE_NUMBER_RECENT_POST_TO_DISPLAY
+ 
+    
+@register.simple_tag(name='get_trunc_word_count_aside', takes_context=True) 
+def get_trunc_word_count_aside(context):
+    try:
+        return context['TRUNCWORDS_COUNT_ASIDE']
+    except Exception as ex:
+         return TRUNCWORDS_COUNT_ASIDE
+ 
+@register.simple_tag(name='get_categories', takes_context=False) 
+def get_categories(context):
+    categories =  BlogCategory.objects.all()
+    return categories
+
+@register.simple_tag(name='get_related_posts', takes_context=True) 
+def get_related_posts(context, post):
+    related_posts =  post.related.all()
+    return related_posts
+
+@register.simple_tag(name='get_modulo', takes_context=False) 
+def get_modulo(index):
+    return index % 2

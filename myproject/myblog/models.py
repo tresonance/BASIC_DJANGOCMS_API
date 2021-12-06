@@ -311,6 +311,8 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
         verbose_name_plural = _("blog articles")
         ordering = ("-date_published", "-date_created")
         get_latest_by = "date_published"
+       
+
 
     def __str__(self):
         default = gettext("Post (no translation)")

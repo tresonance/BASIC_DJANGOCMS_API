@@ -16,6 +16,7 @@ docker exec -it postgres-cont psql -U hello_django -W hello_django_dev
 
 [awesome-blog-image](https://unsplash.com/photos/P3pfwBoZ52s)
 
+[liveload](https://github.com/tjwalch/django-livereload-server)
 
 # INFOS
 ### live loading : 

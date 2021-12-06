@@ -69,7 +69,15 @@ SITEMAP_CHANGEFREQ_LIST = (  # noqa
 List of changefreqs defined in sitemaps.
 """
 
+BLOG_ASIDE_NUMBER_RECENT_POST_TO_DISPLAY = 5
+"""
+Nomber of article to displaying inside aside recents articles
+"""
+
 BLOG_NUM_ARTICLE_PER_ROW = 2
+"""
+Nomber of article per row while displaying posts in blog menu
+"""
 
 BLOG_IMAGE_THUMBNAIL_SIZE = {"size": "350x220", "crop": True, "upscale": False}
 """
@@ -102,12 +110,21 @@ BLOG_LATEST_POSTS = 5
 .. _LATEST_POSTS:
 Default number of post in the **Latest post** plugin.
 """
+BLOG_ASIDE_NUMBER_RECENT_POST_TO_DISPLAY = 5
+"""
+Number of articles to display in aside part
+"""
 
 BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 50
-BLOG_TRUNCWORDS_COUNT_ASIDE=9
 """
 .. _POSTS_LIST_TRUNCWORDS_COUNT:
 Default number of words shown for abstract in the post list.
+"""
+
+BLOG_TRUNCWORDS_COUNT_ASIDE = 9
+"""
+.. _POSTS_LIST_TRUNCWORDS_COUNT:
+Default number of words shown for abstract in the post list in template aside part.
 """
 
 BLOG_META_DESCRIPTION_LENGTH = 320

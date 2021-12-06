@@ -1,4 +1,6 @@
 {% load i18n easy_thumbnails_tags cms_tags %}
+{% load i18n easy_thumbnails_tags %}
+{% load myblog_tags mathfilters %}
 
 <ul class="post-detail">
     {% if post.author %}
@@ -21,7 +23,7 @@
     {% if post.categories.exists %}
         {% for category in post.categories.all %}
             {% if category.slug %}
-                <li class="category_{{ forloop.counter }}"><a href="{% url 'myblog:posts-category' category=category.slug %}" class="blog-categories-{{ category.count }}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}</li>
+                <li class="category_{{ forloop.counter }}">Category: <a href="{% url 'myblog:posts-category' category=category.slug %}" class="blog-categories-{{ category.count }}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}</li>
             {% endif %}
         {% endfor %}
     {% endif %}
