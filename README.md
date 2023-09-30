@@ -4,7 +4,7 @@
 <br/>
 <span>Example: Test a placehlder you want to add, a package, ...</span>
 <br/><br/>
-<span>[Page 1]</span>
+
 
 <h4>A-SET YOUR ENV</h4>
 
