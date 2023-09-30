@@ -3,9 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 .dockerignore
-
+*__init__.py
 # virtualenv folder 
 env*
+venv
 
 # C extensions
 *.so

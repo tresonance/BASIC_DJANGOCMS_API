@@ -1,36 +1,27 @@
-djangocms-installer
-django-cms>=3.8,<3.9
-djangocms-admin-style>=2.0,<3.0
-django-treebeard>=4.0,<5.0
 
-djangocms-text-ckeditor>=4.0,<5.0
-djangocms-link>=3.0,<4.0
-djangocms-icon>=2.0,<3.0
-djangocms-style>=3.0,<4.0
-djangocms-googlemap>=2.0,<3.0
-djangocms-video>=3.0,<4.0
-djangocms-file>=3.0,<4.0
-djangocms-picture>=3.0,<4.0
-djangocms-bootstrap4>=2.0,<3.0
-easy_thumbnails
-django-filer>=1.3
-Django<3.2
-django-classy-tags>=2.0
-django-sekizai>=2.0
-django-mptt>0.9
-html5lib>=1.0.1
-six==1.16.0
-pytz
-aldryn_apphooks_config
-django-parler
-django-meta
-django-sortedm2m
-django-taggit-autosuggest
-aldryn-common
-django-haystack
-aldryn_search
-gunicorn==20.1.0
-psycopg2-binary==2.9.1
-django-static-jquery==2.1.4
-django-livereload-server
-django-mathfilters
+
+# These are the core packages required for your Django project
+django==3.2
+django-cms  
+mysqlclient  #Necessray for web sercie to make rquest towards db sercie (see docker-compose.yaml file)
+
+# Additional packages for Django CMS and related functionality [ Note tha you can override most plugin:see plugin github]
+django-staticfiles              # For handling static files
+djangocms-style                 # For styling in Django CMS
+djangocms-text-ckeditor         # For text editing with CKEditor in Django CMS
+djangocms-file                  # add files and entiere folder to you page
+django-filer                    # handling of files and images
+djangocms-admin-style           # to display admin page with beautifull style 
+djangocms-link                  # Add link to my page 
+django-select2                  # add internal link plugin 
+djangocms-picture               # to add image
+djangocms-style                 # create HTML containers with classes, styles, ids and other attributes
+djangocms-snippet               # plugin to place custom markup or Javascript on pages
+djangocms-audio                 # plugin for audio ['mp3', 'ogg', 'wav']
+djangocms-video                 # plugin for video ['mp4', 'webm', 'ogv']
+djangocms-googlemap             # add googlemap plugin
+easy-thumbnails
+# djangocms-forms <-- souleve des erreurs  ImportError: cannot import name 'ugettext_lazy' from 'django.utils.translation' (/usr/local/lib/python3.8/site-packages/django/utils/translation/__init__.py),
+
+# djangocms-categorization                    #  To add Category
+djangocms-aldryn-categories==2.0.1          #  To add Category
